@@ -29,8 +29,9 @@ from rest_framework.permissions import IsAuthenticated
 class EvaluationCreate(generics.CreateAPIView):
     queryset = Evaluation.objects.all()
     serializer_class = EvaluationSerializer
-    permission_classes = [IsAuthenticated]
-    
+    #permission_classes = [IsAuthenticated]
+    authentication_classes = []  # Remove authentication classes
+ 
     def perform_create(self, serializer):
         # Permettre aux utilisateurs d'évaluer plusieurs fois
         #utilisateur = self.request.user
@@ -50,7 +51,8 @@ from django.http import HttpResponse
 class TelechargementLivreView(generics.RetrieveAPIView):
     queryset = Livre.objects.all()
     #permission_classes = [IsAuthenticated]
-
+    authentication_classes = []  # Remove authentication classes
+    permission_classes = []
     def retrieve(self, request, *args, **kwargs):
         livre = self.get_object()
         file_path = livre.pdf.path
@@ -62,12 +64,26 @@ class TelechargementLivreView(generics.RetrieveAPIView):
 class ListeLivreParCategorieView(generics.ListAPIView):
     serializer_class = LivreSerializer
     #permission_classes = [IsAuthenticated]
-
+    authentication_classes = []  # Remove authentication classes
+    permission_classes = []
     def get_queryset(self):
         categorie = self.kwargs['categorie']
         return Livre.objects.filter(categorie_nom__iexact=categorie)    
     
-    
+class ListeTousLivresView(generics.ListAPIView):
+    serializer_class = LivreSerializer
+    queryset = Livre.objects.all()
+    authentication_classes = []  # Remove authentication classes
+    permission_classes = []
+
+
+class DetailLivreView(generics.RetrieveAPIView):
+    queryset = Livre.objects.all()
+    serializer_class = LivreSerializer
+    lookup_field = 'id_l'  # Specify the lookup field for retrieving the object by Id_l
+    authentication_classes = []  # Remove authentication classes
+    permission_classes = []
+
 # views.py
 from rest_framework import views
 from rest_framework.response import Response
