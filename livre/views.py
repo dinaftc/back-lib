@@ -299,9 +299,10 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 
 
-def ajouter_evaluation(request, livre_id, note):
+def ajouter_evaluation(request,utilisateur_id, livre_id, note):
     # Obtenez l'utilisateur connecté
-    utilisateur = request.user
+    utilisateur=get_object_or_404(Utilisateur,id_utilisateur=utilisateur_id)
+
 
     # Obtenez le livre en fonction de l'ISBN (supposons que le livre soit identifié par l'ISBN)
     livre = get_object_or_404(Livre,id_l=livre_id)
@@ -358,9 +359,9 @@ knn_model_users.fit(X_users)
 
 @csrf_exempt
 # Function to find k-nearest neighbors for a given user
-def find_neighbors_users(request):
+def find_neighbors_users(request,utilisateur_id):
     
-    user_id = request.user
+    user_id = get_object_or_404(Utilisateur,id_utilisateur=utilisateur_id)
     try:
         user_profile = UtilisateurProfile.objects.get(utilisateur=user_id)
         user = Utilisateur.objects.get(id_utilisateur=user_id.id_utilisateur)

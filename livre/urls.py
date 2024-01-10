@@ -8,10 +8,10 @@ urlpatterns = [
     path('par-categorie/<str:categorie>/', ListeLivreParCategorieView.as_view(), name='livres-par-categorie'),
    path('<int:pk>/telecharger/', TelechargementLivreView.as_view(), name='telecharger-livre'),
     path('evaluations/', EvaluationCreate.as_view(), name='evaluation-create'),
-    path('aj_eval/<int:livre_id>/<int:note>/',ajouter_evaluation, name='evaluation') ,
+    path('aj_eval/<int:utilisateur_id>/<int:livre_id>/<int:note>/',ajouter_evaluation, name='evaluation') ,
    
   path('recommandation/',find_neighbors, name='recommandation'),
-  path('recommandation_u/',find_neighbors_users, name='recommandation_user'),
+  path('recommandation_u/<int:utilisateur_id>/',find_neighbors_users, name='recommandation_user'),
     path('livres/', ListeTousLivresView.as_view(), name='liste_tous_livres'),
    path('livres/<int:id_l>/', DetailLivreView.as_view(), name='livre-detail'),
 
